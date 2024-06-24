@@ -1,0 +1,4 @@
+@EndUserText.label: 'T_HEAD UI'
+define service ZCHUI_T_HEAD {
+  expose ZCHC_T_HEAD;
+}

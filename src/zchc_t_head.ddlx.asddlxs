@@ -1,0 +1,312 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: '維護銷項發票明細',
+    typeNamePlural: '會計文件',
+    title: { type: #STANDARD, value: 'SyncMsg' },
+         description: { type: #STANDARD, value: 'Belnr' } },
+         presentationVariant: [{
+         sortOrder: [{ by: 'Belnr', direction: #ASC }],
+         visualizations: [{type: #AS_LINEITEM}] }]
+}
+@UI.createHidden: true
+@UI.presentationVariant: [{maxItems: 7 }]
+annotate view ZCHC_T_HEAD
+    with 
+{
+  @UI.facet: [
+          {
+                    label: '營業人媒體檔案',
+                    id: 'HeaderInfo',
+                    type: #COLLECTION,
+                    position: 10
+        }
+        , 
+//        {
+//                    label: '合計',
+//                    id: 'Total',
+//                    type: #COLLECTION,
+//                    position: 20
+//        }
+//        , 
+//        {
+//                    label: '合計2',
+//                    id: 'Tota2',
+//                    type: #COLLECTION,
+//                    position: 20
+//        }
+//        ,
+                {
+        label: '資料狀態',
+        type: #IDENTIFICATION_REFERENCE,
+        parentId: 'HeaderInfo',
+        targetQualifier: 'Header1'
+        }
+
+        ,        {
+        label: '表頭資料',
+        type: #IDENTIFICATION_REFERENCE,
+        parentId: 'HeaderInfo',
+        targetQualifier: 'Header2'
+        }
+
+//        ,        
+//        {
+//        label: '會計文件2',
+//        type: #FIELDGROUP_REFERENCE,
+//        parentId: 'Tota2',
+//        targetQualifier: 'Total4'
+//        }
+//        ,
+//        {
+//        label: '會計文件',
+//        type: #IDENTIFICATION_REFERENCE,
+//        parentId: 'Total',
+//        targetQualifier: 'Total1'
+//        }
+//
+//        , 
+//         {
+//        label: '憑證',
+//        type: #IDENTIFICATION_REFERENCE,
+//        parentId: 'Total',
+//        targetQualifier: 'Total2'
+//        }
+//
+//        ,
+//         {
+//        label: '折讓',
+//        type: #IDENTIFICATION_REFERENCE,
+//        parentId: 'Total',
+//        targetQualifier: 'Total3'
+//        }
+
+//        ,
+//        {
+//    id: 'idIdentification',
+//    type: #IDENTIFICATION_REFERENCE,
+//    label: '營業人媒體檔案',
+//    position: 10
+//  },
+//  {
+//            id: 'product_data',
+//            purpose: #STANDARD,
+//            label: '發票維護明細',
+//            type: #PRESENTATIONVARIANT_REFERENCE,
+////            type: #LINEITEM_REFERENCE,
+//            position: 30,
+//            targetElement: '_detail'
+//        }
+        ]
+
+
+  //  @UI.hidden: true
+  @Consumption.semanticObject: 'FILE_CREATE'
+  @UI.lineItem: [
+    { type: #FOR_ACTION, dataAction: 'CREATE_FILE',label: 'Create File', invocationGrouping: #CHANGE_SET},
+    {type: #FOR_INTENT_BASED_NAVIGATION, semanticObjectAction: 'display', label: 'to_File_app'}
+    ]
+  HeadID;
+
+  @UI.lineItem: [ {
+    position: 5,
+    cssDefault.width: '8em',  
+    criticality: 'criticality1'         
+  }
+  ]
+  @UI.identification: [ {
+    position: 5,
+    criticality: 'criticality1', 
+    qualifier: 'Header1'
+  } ]
+  SyncMsg;
+
+
+  @UI.lineItem: [ {
+    position: 10
+  }
+  ]
+  @UI.identification: [ {
+    position: 10 , qualifier: 'Header1'
+  } ]
+  Canl;
+
+  @UI.lineItem: [ {
+    position: 20
+  } ]
+  @UI.identification: [ {
+    position: 20, qualifier: 'Header1'
+  } ]
+  SumFg;
+
+  @UI.lineItem: [ {
+    position: 30
+  } ]
+  @UI.identification: [ {
+    position: 30 , qualifier: 'Header1'
+  } ]
+  NetFg;
+
+  @UI.lineItem: [ {
+    position: 35,
+    cssDefault.width: '6em'
+  } ]
+  @UI.identification: [ {
+    position: 35, qualifier: 'Header2'
+  } ]
+  @EndUserText.label:'公司代碼'
+  @Consumption.valueHelpDefinition: [{ entity:{ name: 'ZTDGUIC_BUKRS_VH',element: 'Bukrs' }
+  ,useForValidation: true
+  ,distinctValues: true
+    ,additionalBinding: [{ element:'Butxt',
+                           localElement: 'Butxt'
+                              ,usage:  #RESULT
+                              }]
+                                        }]
+  Bukrs;
+//  @UI.lineItem: [ {
+//    position: 40
+//  } ]
+//  @UI.identification: [ {
+//    position: 40
+//  } ]
+  @UI.hidden: true
+  Butxt;
+
+
+  @UI.lineItem: [ {
+    position: 45
+  } ]
+  @UI.selectionField: [{position: 10 }]   
+  @UI.identification: [ {
+    position: 45, qualifier: 'Header2'
+  } ]
+  Belnr;
+
+  @UI.lineItem: [ {
+    position: 50
+  } ]
+  @UI.identification: [ {
+    position: 50, qualifier: 'Header2'
+  } ]
+  @Consumption.filter:{ selectionType: #INTERVAL ,multipleSelections: false }
+  @UI.selectionField:[{position: 20}]
+  Budat;
+
+  @UI.lineItem: [ {
+    position: 60
+  }  ]
+  @UI.identification: [ {
+    position: 60, qualifier: 'Header2'
+  } ]
+  Mwskz;
+
+  @UI.lineItem: [ {
+    position: 70 ,
+    criticality: 'criticality2',
+    cssDefault.width: '10em'
+  } ]
+  @UI.identification: [ {
+    position: 70 ,
+    criticality: 'criticality2',
+    qualifier: 'Header2'
+  } ]
+  Hwbas;
+
+  @UI.lineItem: [ {
+    position: 80,
+    criticality: 'criticality2',
+    cssDefault.width: '10em'
+  } ]
+  @UI.identification: [ {
+    position: 80, 
+    criticality: 'criticality2',
+    qualifier: 'Header2'
+  } ]
+  Hwste;
+
+  @UI.lineItem: [ {
+    position: 90,
+    cssDefault.width: '8em'        
+  } ]
+  @UI.identification: [ {
+    position: 90, qualifier: 'Header2'
+  } ]
+  Usnam;
+
+//  @UI.lineItem: [ {
+//    position: 100,
+//    cssDefault.width: '6em'    
+//  } ]
+//  @UI.identification: [ {
+//    position: 100, qualifier: 'Header2'
+//  } ]
+//  BelnrIndex;
+//  //
+//  @UI.lineItem: [ {
+//    position: 110,
+//    cssDefault.width: '6em'     
+//  } ]
+//  @UI.identification: [ {
+//    position: 110, qualifier: 'Header2'
+//  } ]
+//  HwbasIndex;
+//
+//  @UI.lineItem: [ {
+//    position: 120,
+//    cssDefault.width: '6em'     
+//  } ]
+//  @UI.identification: [ {
+//    position: 120, qualifier: 'Header2'
+//  } ]
+//  HwsteIndex;
+////    @UI.lineItem: [ {
+////    position: 130,
+////    cssDefault.width: '6em'     
+////  } ]
+////  @UI.identification: [ {
+////    position: 130, qualifier: 'Header2'
+////  } ]
+////  Hidefield;
+////    @UI.lineItem: [ {
+////    position: 130,
+////    cssDefault.width: '6em'     
+////  } ]
+////  @UI.identification: [ {
+////    position: 130, qualifier: 'Header2'
+////  } ]
+////  He;
+////  @UI.fieldGroup: [ {
+////    position: 10, qualifier: 'Total4'
+////  } ]
+////  s_bas;
+//    @UI.identification: [ {
+//    position: 10, qualifier: 'Total1'
+//  } ]
+//  S_BAS2;
+////    @UI.fieldGroup: [ {
+////    position: 10, qualifier: 'Total4'
+////  } ]
+////  s_ste;
+//    @UI.identification: [ {
+//    position: 20, qualifier: 'Total1'
+//  } ]
+//  S_STE2;
+//    @UI.identification: [ {
+//    position: 10, qualifier: 'Total2'
+//  } ]
+//  u_bas;
+//    @UI.identification: [ {
+//    position: 20, qualifier: 'Total2'
+//  } ]
+//  u_ste;
+//    @UI.identification: [ {
+//    position: 10, qualifier: 'Total3'
+//  } ]
+//  c_bas;
+//    @UI.identification: [ {
+//    position: 20, qualifier: 'Total3'
+//  } ]
+//  c_ste;
+    
+}

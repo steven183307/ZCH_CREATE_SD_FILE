@@ -1,0 +1,4 @@
+@EndUserText.label: 'FILE UI'
+define service ZCHUI_FILE {
+  expose ZCHC_FILE;
+}

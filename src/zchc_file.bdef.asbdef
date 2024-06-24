@@ -1,0 +1,21 @@
+projection;
+strict ( 1 );
+use draft;
+
+define behavior for ZCHC_FILE //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use action testMessage;
+//  -->Add by Neil 2024.5.13 Upload Data to 1909 AL11
+  use action uploadDataTo1909;
+//  <--Add by Neil 2024.5.13 Upload Data to 1909 AL11
+}

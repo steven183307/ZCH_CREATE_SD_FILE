@@ -1,0 +1,49 @@
+managed  implementation in class zbp_chi_file unique;
+strict ( 1 );
+with draft;
+
+define behavior for ZCHI_FILE //alias <alias_name>
+persistent table zcht_file
+draft table zcht_file_d
+lock master total etag Lastchangedat
+authorization master ( instance )
+etag master Lastchangedat
+{
+  create;
+  update;
+  delete;
+
+  field (readonly)
+  CreatedAt,
+  CreatedBy;
+
+  field ( numbering : managed ,readonly )
+   RUUID;
+  determination check_data on modify {  field Filename; }
+  action ( features : instance ) testMessage   result [1] $self ;
+
+//  -->Add by Neil 2024.5.13 Upload Data to 1909 AL11
+  action ( features : instance ) uploadDataTo1909;
+//  <--Add by Neil 2024.5.13
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zcht_file
+  {
+    RUUID = ruuid;
+    FileNO = fileno;
+    longString = longstring;
+    Mimetype = mimetype;
+    Filename = filename;
+    Attachment = attachment;
+    CreatedBy = createdby;
+    CreatedAt = createdat;
+    Lastchangedby = lastchangedby;
+    Lastchangedat = lastchangedat;
+    Locallastchangedat = locallastchangedat;
+  }
+}

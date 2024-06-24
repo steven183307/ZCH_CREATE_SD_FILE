@@ -1,0 +1,15 @@
+unmanaged implementation in class zbp_chi_t_head unique;
+strict ( 2 );
+
+define behavior for ZCHI_T_HEAD //alias <alias_name>
+//late numbering
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  field (readonly)
+  HeadID;
+
+  action ( features : instance ) CREATE_FILE parameter ZCHCA_FILEPARAMETER;
+
+}
